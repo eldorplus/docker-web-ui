@@ -1,0 +1,60 @@
+<div style="padding-right: 15px; padding-left: 15px;" class="col-md-12" >
+  <div class="col-md-12"><br>
+    <div class="panel panel-info %>">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-4">
+           <h2><span class="fa fa-file-text" aria-hidden="true"></span> DockerFiles<small>   <%= t('containers_list') %></small></h2>
+         </div>
+         <div class="col-md-2 col-md-offset-5" >
+          <h2>
+            <%= link_to(t('dockerfiles_new_file'), dockerfiles_new_path, class: 'btn btn-success') %>
+          </h2>
+        </div>
+        </div>
+      </div>
+      <div class="panel-body" >
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th><%= t('dockerfiles_file') %></th>
+              <th><%= t('dockerfiles_content') %></th>
+              <th><%= t('docker_controler') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @directory.each do |file| %>
+              <%
+                directory = Dictionary.new
+                path = file['path']
+                basename = path + "/" + file['file']
+              %>
+              <tr>
+                <td><%= basename %></td>
+                <td>
+                  <% @content = directory.get_file_content(basename) %>
+                  <% @content.split("\r\n").each do |content| %>
+                      <%= content.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe %>
+                  <% end %>
+                </td>
+                <td style="width: 280px;">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <%= button_to t('link_edit'), dockerfiles_edit_path(:file => basename), method: 'get', :class => 'btn btn-info' %>
+                    </div>
+                    <div class="col-md-4 col-md-offset-0">
+                      <%= button_to t('link_delete'), dockerfiles_delete_path(:file => basename), method: 'delete', :class => 'btn btn-danger'%>
+                    </div>
+                    <div class="col-md-3 col-md-offset-0">
+                      <%= button_to t('link_go'), images_create_path(:id => basename), method: 'post', :class => 'btn btn-success' %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

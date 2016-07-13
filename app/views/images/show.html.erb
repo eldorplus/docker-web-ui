@@ -1,0 +1,88 @@
+<div style="padding-right: 15px; padding-left: 15px;" >
+  <h1>
+    <span class="glyphicon glyphicon-list" aria-hidden="true"></span> <%=  t('image_title') %> <small>   <% @image  %></small></h1>
+
+  <div class="col-md-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4>
+          <div class="row">
+            <div class="col-md-2">
+              <%= button_to t('link_go_back'), images_index_path, :method => :"get",  :class => "btn btn-success", :action => "index" %>
+            </div>
+            <div class="col-md-2 col-md-offset-7">
+              <span class="label label-info" ></span>
+            </div>
+          </div>
+        </h4>
+      </div>
+      <div class="panel-body" >
+        <table class="table table-bordered table-hover" >
+          <tr>
+            <td>Id</td>
+            <td><%= @image.info['id'] %></td>
+          </tr>
+          <tr>
+            <td><%= t('image_created') %> </td><td><%= @image.info['Created'] %></td>
+          </tr>
+          <tr>
+            <td>Parent </td>
+            <td>
+              <%-  @history.each do |history| %>
+                  <% if history['Id'] == @image.info['id'] %>
+                  <% else %>
+                      <% if history['Id'] != "<missing>" %>
+                        <%= button_to history['Id'][0,10].to_s + " ...", image_path(history['Id']), :method => :"get",  :class => "btn btn-info" %>
+                      <% else %>
+                          <%= content_tag :span, history['Id'][0,10].to_s + " ...", class: "btn btn-info" %>
+                      <% end %>
+                  <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><%= t('docker_virtual_size') %></td>
+            <td><%= @image.info['VirtualSize']/1024/1024 %> MB</td>
+          </tr>
+          <tr>
+            <td><%= t('docker_hostname') %> </td>
+            <td><%= @image.info['ContainerConfig']['Hostname'] %></td>
+          </tr>
+          <tr>
+            <td><%= t('docker_user') %> </td><td><%= @image.info['User'] %></td>
+          </tr>
+          <tr>
+            <td><%= t('docker_cmd') %> </td>
+            <td>
+              <%- if @image.info['Config'] != nil %>
+                  <%= @image.info['Config']['Cmd'] %>
+                  <%= @image.info['ContainerConfig']['Cmd'] %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><%= t('docker_volumes') %></td>
+            <td><%= @image.info['Volumes'] %></td>
+          </tr>
+          <tr>
+            <td><%= t('docker_volumes_from') %></td>
+            <td><%= @image.info['ContainerConfig']['Volumes'] %></td>
+          </tr>
+          <tr>
+            <td><%= t('docker_built_with') %></td>
+            <td><%= "Docker Version "+@image.info['DockerVersion'].to_s + " on " + @image.info['Os'].to_s + ", " + @image.info['Architecture'].to_s %></td>
+          </tr>
+        </table>
+        <div class="jumbotron">
+          <h3><%= t('image_history') %></h3>
+          <%-  @history.each do |history| %>
+              <b><%=	history['Id'].to_s+" :" %></b>
+              <br><%=	t('image_created') + " : " + Time.at(history['Created']).strftime("%a %d %B at %I:%M%p") %>
+              <br><%= t('image_created_by') + ": " + history['CreatedBy'] %>
+              <br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

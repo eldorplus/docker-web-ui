@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="navbar navbar-default">
+    <form accept-charset="UTF-8" action="<%= containers_new_path %>" method="post" class="navbar-form navbar-left">
+      <div class="form-group">
+        <input id="containers_image" name="image" class="form-control" placeholder="<%=  t('image_find_docker') %>" type="text">
+      </div>
+      <button name="commit" value="search" class="btn btn-success" ><%= t('image_find_it') %></button>
+    </form>
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading"><h4> <%= t('image_available') %> </h4></div>
+    <div class="panel-body" >
+      <table class="table table-bordered table-hover" >
+        <%- @search.each do |s| %>
+            <%- image = s.id %>
+            <% s.id %>
+            <% if !image.split("/")[1] %>
+                <% imageurl = "_/"+image %>
+            <% else %>
+                <% imageurl = "u/"+image %>
+                <tr>
+                  <td>
+                    <b><%= image %></b>
+                  </td>
+                  <td>
+                    <%= button_to t('link_more_infos'), "https://registry.hub.docker.com/" + imageurl + "/", :method => :"get",  :class => "btn btn-info", form: { target: '_blank'} %>
+                  </td>
+                  <td>
+                    <%= button_to t('link_pull_it'), images_new_path(image), :method => "get",  :class => "btn btn-info", :id => image %></td>
+                  <td>
+                    <%= button_to t('link_create_containers'), containers_setup_path(image), :method => "get",  :class => "btn btn-success", :id => image %>
+            <% end %>
+            </td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

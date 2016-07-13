@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="panel panel-info">
+    <div class="panel-heading"><h4> <%= t('containers_create') %> </h4></div>
+    <div class="panel-body" >
+      <form accept-charset="UTF-8" action="<%= containers_create_path(@image) %>" method="post">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="containers_image">Image </label><h5 class="title_image"><%= @image %> </h5>
+              <input type="hidden" id="containers_image" name="image" class="form-control" value="<%= @image %>" placeholder="Images" type="text">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="containers_recipient">Name</label>
+              <input id="containers_name" name="name" class="form-control" placeholder="Name" type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="containers_cmd">Command </label>
+          <input id="containers_cmd" name="command" class="form-control" placeholder="Command :  /bin/bash" type="text">
+        </div>
+        <label for="containers_hostname">hostname </label>
+        <div class="form-group">
+          <input id="containers_hostname" name="hostname" class="form-control" placeholder="Hostname" type="text">
+        </div>
+        <label for="containers_portmapping">Port mapping </label>
+        <div class="form-group">
+          <input id="containers_portmapping" name="portmapping" class="form-control" placeholder="127.0.0.1:8080:80" type="text">
+        </div>
+        <label for="containers_env"><%= t('variable_env') %> </label>
+        <div class="form-group">
+          <input id="containers_env" name="env" class="form-control" placeholder="FOO=bar, BAZ=quux" type="text">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" ><%= t('link_create_it') %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

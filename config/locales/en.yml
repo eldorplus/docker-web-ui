@@ -1,0 +1,90 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+
+  error_occured: "An error occured"
+  docker_not_running: "It seems your Docker is not running!"
+  error_unreachable: "internet is unreachable"
+  error_container_same_exist: "Maybe a container with the same name exist already!?"
+  error_containers_delete: "Delete the container and create a new one."
+
+  success_containers_started: "Container started."
+  error_containers_started: "The container could not be started."
+  success_containers_stoped: "The container was successfully stoped."
+  error_containers_started: "The container could not be stoped."
+  error_containers_first_stoped: "The container must be stopped first."
+  success_containers_has_ben_deleted: "The container has been deleted."
+  error_containers_unknown: "Unknown error."
+  error_containers_is_still: "Maybe the container is still running?"
+
+  containers: "Containers"
+  containers_list: "list"
+  containers_create_new: "CREATE A NEW CONTAINER"
+  containers_create: "Create Container"
+
+  image_available: "Available images"
+  image_find_it: "Find it"
+  image_find_docker: "Find docker images"
+  image_history: "History"
+  image_created: "Created"
+  image_created_by: "Created by"
+  image_title: "Images"
+  image_repository: "Repository"
+  image_create_new: "NEW IMAGE"
+  image_delete_quest: "Are you sure you want to delete ?"
+  image_stop_quest: "Are you sure you want to stop ?"
+  image_removing_success: "The image was successfully deleted."
+  image_removing_error: "Error deleting images."
+  image_maybe_offline: "Maybe you are offline?"
+
+  link_more_infos: "More infos"
+  link_pull_it: "Pull it"
+  link_create_it: "Create it"
+  link_go_back: "Go back"
+  link_delete: "Delete"
+  link_create_containers: "Create container"
+  link_rename_tag: "rename"
+  link_edit: "Edit"
+  link_go: "Do it"
+
+  variable_env: "Environment Variables"
+
+  docker_built_with: "Built with"
+  docker_volumes: "Volumes"
+  docker_volumes_from: "Volumes from"
+  docker_virtual_size: "Virtual Size"
+  docker_hostname: "Hostname"
+  docker_user: "User"
+  docker_cmd: "Cmd"
+  docker_controler: "Controler"
+  docker_status_stopped: "Stopped"
+  docker_status_started: "Started"
+  docker_go_start: "Start"
+  docker_go_stop: "Stop"
+
+  dockerfiles_file: "Files"
+  dockerfiles_maintainer: "Maintainer"
+  dockerfiles_content: "Content"
+  dockerfiles_new_file: "NEW DOCKERFILE"
+  docker_can_not_read_file: "Can not read this "
+  docker_edit_save_file: "Save"

@@ -1,0 +1,19 @@
+<div class="navbar navbar-default">
+  <h4 class="">Edition du fichier <%= @file.split("/").last %></h4>
+</div>
+
+<%= form_tag(dockerfiles_save_path(@file), method: :put, class: 'form-group', 'accept-charset': 'utf-8') do -%>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= label_tag 'dockerfile_name', t('dockerfiles_file') + ' :' %>
+          <%= text_field_tag :file, @file, :id => 'dockerfile_name', class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comment"><%= t('dockerfiles_content') %> :</label>
+      <%= text_area_tag :content, @content, :id => 'dockerfile_content', class: 'form-control', size: "60x12" %>
+    </div>
+    <div><%= submit_tag t('docker_edit_save_file'), class: 'btn btn-success', name: 'commit' %></div>
+<% end -%>

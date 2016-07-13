@@ -1,0 +1,15 @@
+
+<div class="container" style="clear: both; padding-top: 50px;">
+  <div class="flash-container">
+    <% if flash && !flash.empty? %>
+      <% flash.each do |key, value| %>
+        <% kkey = key %>
+        <% kkey = 'danger' if key.to_s.eql?('error') %>
+        <div class="alert alert-<%= kkey %>">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+          <%= value %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

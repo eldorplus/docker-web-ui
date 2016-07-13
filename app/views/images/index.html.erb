@@ -1,0 +1,86 @@
+<div style="padding-right: 15px; padding-left: 15px;" >
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="panel panel-info %>">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <h2>
+              <span class="fa fa-file-image-o" aria-hidden="true"></span> Images<small>   <%= t('containers_list') %></small>
+            </h2>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-3 col-sm-offset-4 col-xs-offset-1 col-md-offset-5" >
+            <h2>
+              <%= link_to content_tag(:span, t('containers_create_new'), :class => "fa fa-home", :'aria-hidden' => "true"), containers_new_path, :type => "button", :class=>"btn btn-success" %>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" >
+        <table class="table  table-hover" >
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th><%= t('image_repository') %></th>
+              <th><%= t('docker_virtual_size') %></th>
+              <th><%= t('image_created') %></th>
+              <th>Tag</th>
+              <th><%= t('docker_controler') %></th>
+            </tr>
+          </thead>
+          <tbody>
+          <%- @images.each do |cnt| %>
+              <tr style="vertical-align: middle;">
+                <td>
+                  <%= button_to  cnt.info['id'][0,10]+"..." , images_show_path(cnt.info['id']), :method => :"get",  :class => "btn btn-info" %>
+                </td>
+                <%- image = cnt.info['RepoTags'][0].split(':')[0] %>
+                <% if !image.split("/")[1] %>
+                    <% imageurl = "_/"+image %>
+                <% else %>
+                    <% imageurl = "u/"+image %>
+                <% end %>
+                <td >
+                  <% cnt.info['RepoTags'].each do |r|%>
+                      <%= button_to r, "https://registry.hub.docker.com/" + imageurl+ "/", :method => :"get",  :class => "btn btn-info", form: { target: '_blank'} %> <%=  %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= cnt.info['VirtualSize']/1024/1024 %> MB</td>
+                <td>
+                  <%= Time.at(cnt.info['Created']).strftime("%a %d %B at %I:%M%p") %>
+                </td>
+                <td>
+                  <form  class="form-group" accept-charset="UTF-8" action="<%= images_create_path(cnt.id) %>" method="post" style="margin: 0px">
+                    <input type="hidden" value="rename"  name="format"  type="text">
+                    <div class="row" style="margin: 0px">
+                      <div class="col-md-7">
+                        <div class="form-group">
+                          <input  name="name" class="form-control" placeholder="repo/name" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-group col-sm-offset-1 col-xs-offset-1 col-md-offset-1">
+                          <button type="button" class="btn btn-success" ><%= t('link_rename_tag') %></button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <div class="row" style="margin: 0px;">
+                    <div class="col-md-5">
+                      <%= button_to t('link_create_containers'), containers_setup_path(image), :method => "get",  :class => "btn btn-success", :id => image %>
+                    </div>
+                    <div class="col-md-2 col-md-offset-2">
+                      <%= button_to t('link_delete'), images_delete_path(cnt.id), :method => :"delete",  data: {confirm: t('image_delete_quest')}, :class => "btn btn-danger"%>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

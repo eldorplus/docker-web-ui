@@ -1,0 +1,99 @@
+<div style="padding-right: 15px; padding-left: 15px;" class="col-md-12" >
+
+  <div class="col-md-12">
+    <br>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-4">
+             <h2>
+               <span class="fa fa-archive" aria-hidden="true"></span>
+               <%= t('containers') %><small>   <%=  t('containers_list') %></small>
+             </h2>
+          </div>
+          <div class="col-md-3 col-md-offset-4" >
+            <h2>
+              <%= link_to content_tag(:span, t('containers_create_new'), :class => "fa fa-home", :'aria-hidden' => "true"), containers_new_path, :type => "button", :class=>"btn btn-success" %>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" >
+        <table class="table  table-hover" >
+          <thead>
+           <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Command</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @containers.each do |cnt| %>
+            <%- @container = Docker::Container.get(cnt.id) %>
+            <%- containerjson = @container.json %>
+            <% @nametitle = @container.info['Name'] %>
+            <% @containid = @container.info['id'] %>
+            <% @state = @container.info['State'] %>
+            <% @config = @container.info['Config'] %>
+            <% if !@state["Running"] %>
+              <% button = "false" %>
+              <% status = "start" %>
+              <% label = t 'docker_status_stopped' %>
+              <% start = t 'docker_go_start' %>
+              <% infobalise = {label: "#{label}", color: "default", todo: "#{start}", clrtodo: "success"} %>
+            <% end %>
+            <% if @state["Running"] %>
+              <% button = "true" %>
+              <% status = "stop" %>
+              <% label = t 'docker_status_started' %>
+              <% stop = t 'docker_go_stop' %>
+              <% infobalise = {label: "#{label}", color: "success", todo: "#{stop}", clrtodo: "warning"} %>
+            <% end %>
+          <tr class=<%= infobalise[:color].to_s %> >
+            <td>
+              <b>
+                <h4>
+                  <%= button_to  @nametitle.split('/')[1], containers_show_path(cnt.id), :method => :"get",  :class => "btn btn-info" %>
+                </h4>
+              </b>
+            </td>
+            <td>
+              <div class="col-md-3">
+                <b>
+                  <h4>
+                    <span class="label label-<%= infobalise[:color].to_s %>" > <%= infobalise[:label] %></span>
+                  </h4>
+                </b>
+              </div>
+            </td>
+            <% image_name = containerjson['Config']['Image'] %>
+            <% containerjson['Config']['Entrypoint'].to_s %>
+            <td>
+              <%= button_to image_name[0,25] , images_show_path(containerjson['Image']), :method => :"get",  :class => "btn btn-info" %>
+            </td>
+            <td>
+              <%= containerjson['Config']['Entrypoint'].to_s + containerjson['Config']['Cmd'].to_s %>
+            </td>
+            <td style="width: 200px;">
+              <div class="row">
+              <div class="col-md-2">
+                <% if status == "start" %>
+                  <%= button_to infobalise[:todo], containers_start_path(cnt.id), :method => :"post",  :class => "btn btn-" + infobalise[:clrtodo].to_s, :id => @containid %>
+                <% else %>
+                    <%= button_to infobalise[:todo], containers_stop_path(cnt.id), :method => :"post",  data: {confirm: t('image_stop_quest')}, :class => "btn btn-" + infobalise[:clrtodo].to_s, :id => @containid %>
+                <% end %>
+              </div>
+              <div class="col-md-2 col-md-offset-4">
+                <%= button_to t('link_delete'), containers_delete_path(cnt.id), :method => :"delete",  data: {confirm: t('image_delete_quest')}, :class => "btn btn-danger"%></div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
