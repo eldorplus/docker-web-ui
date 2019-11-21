@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Use bootstrap
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'dotenv-rails'
 gem 'less-rails'
 gem 'font-awesome-rails'
