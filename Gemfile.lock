@@ -73,7 +73,7 @@ GEM
     erubis (2.7.0)
     excon (0.45.3)
     execjs (2.7.0)
-    ffi (1.9.13)
+    ffi (1.11.2)
     font-awesome-rails (4.6.3.1)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
